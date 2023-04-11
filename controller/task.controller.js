@@ -1,6 +1,6 @@
-import todoTask from '../model/todo.schema';
-import CustomError from '../util/customError';
-import asyncHandler from '../services/asyncHandler';
+import todoTask from '../model/todo.schema.js';
+import CustomError from '../util/customError.js';
+import asyncHandler from '../services/asyncHandler.js';
 
 /************************************************************
 
@@ -42,7 +42,7 @@ export const createTask = asyncHandler(async(req,res)=>{
 *************************************************************/
 
 export const getTask = asyncHandler(async(_req,res)=>{
-    const tasks = await find();
+    const tasks = await todoTask.find();
 
     res.status(200).json({
         success:true,
@@ -62,8 +62,8 @@ export const getTask = asyncHandler(async(_req,res)=>{
 *************************************************************/
 
 export const editTask = asyncHandler(async(req,res)=>{
-    const id = req.params.id;
-    if (!id){
+    const param_id = req.params.id;
+    if (!param_id){
         throw new CustomError("ID is missing");
     }
     const{taskName , description} = req.body;
@@ -71,7 +71,7 @@ export const editTask = asyncHandler(async(req,res)=>{
         throw new CustomError("Please enter taskName and description");
     }
 
-    const task = await todoTask.findByIdAndUpdate(id,{taskName,description});
+    const task = await todoTask.findByIdAndUpdate(param_id,{taskName,description});
 
     res.status(200).json({
         success : true,
