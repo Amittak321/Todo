@@ -6,7 +6,7 @@ import config from './config/index.js'
 //self invoke function
 (async ()=>{
     try {
-        await mongoose.connect('mongodb://0.0.0.0:27017/todo')
+        await mongoose.connect(config.MONGODB_URL)
         console.log("DB CONNECTED");
 
         app.on('error',(err)=>{
@@ -17,7 +17,7 @@ import config from './config/index.js'
             console.log(`Listening on ${config.PORT}`)
         }
 
-        app.listen(5000 ,onListening);
+        app.listen(config.PORT ,onListening);
 
     } catch (err) {
         console.log("ERROR " , err);
